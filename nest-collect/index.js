@@ -1,7 +1,6 @@
 const Nest = require('nest-cam');
 const fs = require('fs')
 const path = require('path');
-const ffmpeg = require('fluent-ffmpeg');
 require('dotenv').config();
 
 const nest = new Nest({
@@ -13,12 +12,16 @@ const nest = new Nest({
     snapshotInterval: 300
 });
 
+const dirPath = path.join(__dirname, 'images', 'temp');
+if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+}
 
 const takeImage = (id) => {
     console.log("called on " + id)
     nest.getLatestSnapshot().then((image) => {
-        // Save the image to disk with the event ID as the filename
-        image.pipe(fs.createWriteStream(`abhinav-${id}.jpg`));
+        // Write the file
+        image.pipe(fs.createWriteStream(path.join(dirPath, `${id}.jpg`)));
     });
 
     console.log("written")
@@ -30,8 +33,8 @@ nest.init().then(() => {
        if (event) {
        
             takeImage(event.id)
-            setTimeout(() => takeImage(event.id+"v2"), 300)
-            setTimeout(() => takeImage(event.id+"v3"), 600)
+            setTimeout(() => takeImage(event.id+"v6008"), 300)
+            setTimeout(() => takeImage(event.id+"1860093"), 600)
         }
     });
 });
