@@ -56,28 +56,58 @@ const recognizeFace = () => {
 
 
 const generateMeme = (name, event_id) => {
-    // Spawn a new process to run the Python script
-    const pythonProcess = spawn('python', ['../scripts/memeify.py', name, `${name}-${event_id}.jpg`]);
+    return new Promise((resolve, reject) => {
+        // Spawn a new process to run the Python script
+        const pythonProcess = spawn('python', ['../scripts/memeify.py', name, `${name}-${event_id}.jpg`]);
 
-    // Listen to data event to receive output from the Python script
-    pythonProcess.stdout.on('data', (data) => {
-        console.log(`Output from Python: ${data}`);
+        // Listen to data event to receive output from the Python script
+        pythonProcess.stdout.on('data', (data) => {
+            console.log(`Output from Python: ${data}`);
+        });
 
+        // Handle errors if the Python script fails to run
+        pythonProcess.stderr.on('data', (data) => {
+            console.error(`Error: ${data}`);
+        });
+
+        // Handle script exit
+        pythonProcess.on('close', (code) => {
+            console.log(`Python script generateMeme exited with code ${code}`);
+            if (code === 0) {
+                resolve(); // Resolve if script exits successfully
+            } else {
+                reject(new Error(`Python script generateMeme exited with code ${code}`)); // Reject on error
+            }
+        });
     });
-
-    // Handle errors if the Python script fails to run
-    pythonProcess.stderr.on('data', (data) => {
-        console.error(`Error: ${data}`);
-    });
-
-    // Handle script exit
-    pythonProcess.on('close', (code) => {
-        console.log(`Python script generateMeme exited with code ${code}`);
-    });
-
 }
 
+const tweet = (name, event_id) => {
+    return new Promise((resolve, reject) => {
+        // Spawn a new process to run the Python script
+        const pythonProcess = spawn('python', ['../scripts/twitterScript.py', name, `${name}-${event_id}.jpg`, `DJ keeps stealing my food :(`]);
 
+        // Listen to data event to receive output from the Python script
+        pythonProcess.stdout.on('data', (data) => {
+            console.log(`Output from Python: ${data}`);
+        });
+
+        // Handle errors if the Python script fails to run
+        pythonProcess.stderr.on('data', (data) => {
+            console.error(`Error: ${data}`);
+        });
+
+        // Handle script exit
+        pythonProcess.on('close', (code) => {
+            console.log(`Python script tweet exited with code ${code}`);
+            if (code === 0) {
+                resolve(); // Resolve if script exits successfully
+            } else {
+                reject(new Error(`Python script tweet exited with code ${code}`)); // Reject on error
+            }
+        });
+    });
+};
 
 nest.init().then(() => {
     nest.subscribe(async (event) => {
@@ -88,7 +118,15 @@ nest.init().then(() => {
                 const name = await recognizeFace();
                 console.log("LOLOLLO");
                 if (name !== "temp") {
-                    generateMeme(name, event.id);
+                    try {
+                        await generateMeme(name, event.id);
+                        console.log("Meme generated, now tweeting..."); // Debugging log
+                        await tweet(name, event.id); // Await tweet here
+                    } catch (error) {
+                        console.error(`Error in generating meme or tweeting: ${error}`);
+                    }
+                } else {
+                    console.log("Recognized face as 'temp', skipping meme and tweet."); // Debugging log
                 }
             } catch (error) {
                 console.error(`Error recognizing face: ${error}`);
