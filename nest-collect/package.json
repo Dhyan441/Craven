@@ -10,8 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "child_process": "^1.0.2",
     "dotenv": "^16.4.5",
     "fluent-ffmpeg": "^2.1.3",
-    "nest-cam": "^1.0.5"
+    "got": "^14.4.2",
+    "needle": "^3.3.1",
+    "nest-cam": "^1.0.5",
+    "oauth-1.0a": "^2.2.6"
   }
 }

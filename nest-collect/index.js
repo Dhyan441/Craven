@@ -1,6 +1,7 @@
 const Nest = require('nest-cam');
 const fs = require('fs')
 const path = require('path');
+const { spawn } = require('child_process');
 require('dotenv').config();
 
 const nest = new Nest({
@@ -27,14 +28,36 @@ const takeImage = (id) => {
     console.log("written")
 };
 
+const recognizeFace = (id) => {
+    // index.js
+
+
+// Spawn a new process to run the Python script
+const pythonProcess = spawn('python', ['../scripts/recognize.py']);
+
+// Listen to data event to receive output from the Python script
+pythonProcess.stdout.on('data', (data) => {
+    console.log(`Output from Python: ${data}`);
+});
+
+// Handle errors if the Python script fails to run
+pythonProcess.stderr.on('data', (data) => {
+    console.error(`Error: ${data}`);
+});
+
+// Handle script exit
+pythonProcess.on('close', (code) => {
+    console.log(`Python script exited with code ${code}`);
+});
+
+}
+
 nest.init().then(() => {
     nest.subscribe((event) => {
        console.log(event)
-       if (event) {
-       
+       if (event) {    
             takeImage(event.id)
-            setTimeout(() => takeImage(event.id+"v6008"), 300)
-            setTimeout(() => takeImage(event.id+"1860093"), 600)
+            recognizeFace(event.id)
         }
     });
 });

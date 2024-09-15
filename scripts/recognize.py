@@ -94,7 +94,13 @@ if __name__ == "__main__":
         print("Looking for faces in {}".format(image_file))
         # Find all people in the image using a trained classifier model
         # Note: You can pass in either a classifier file name or a classifier model instance
-        predictions = predict(full_file_path_source, model_path="trained_knn_model.clf")
+
+
+        # Assuming the model file is in the same directory as the script
+        script_dir = os.path.dirname(__file__)
+        model_path = os.path.join(script_dir, 'trained_knn_model.clf')
+
+        predictions = predict(full_file_path_source, model_path=model_path)
 
         if predictions:
             topPrediction = predictions[0]
@@ -118,7 +124,7 @@ if __name__ == "__main__":
         else:
             print("BOZO NOT RECOGNIZED!")
             # delete file
-            os.remove(full_file_path_source)
+            #os.remove(full_file_path_source)
         
 
         
