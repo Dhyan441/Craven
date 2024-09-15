@@ -1,20 +1,17 @@
 // src/App.js
 import React, { useState, useEffect } from 'react';
+const path = require("path");
+
+
 
 const getImageCount = async (folder) => {
   try {
-    console.log("getting here ");
-    const response = await fetch(`../../../nest-collect/images`);
-    console.log("res", response);
+    const response = await fetch(`/images/${folder}/`); // Adjust based on your directory structure
     const text = await response.text();
     const parser = new DOMParser();
     const htmlDoc = parser.parseFromString(text, 'text/html');
     const imageElements = htmlDoc.querySelectorAll('a[href$=".jpg"], a[href$=".jpeg"], a[href$=".png"]');
-    console.log("here ");
-    const l = imageElements.length;
-    console.log("the length ", imageElements);
-    return l;
-
+    return imageElements.length;
   } catch (error) {
     console.error(`Error fetching image count for folder ${folder}:`, error);
     return 0;
@@ -43,13 +40,25 @@ function App() {
 
   return (
     <div>
-      <h1>Drawer Opening Analytics</h1>
+      <h1>Craven</h1>
       <ul>
         <li>Dhyan: {counts.dhyan} times</li>
         <li>Nandan: {counts.nandan} times</li>
         <li>Abhinav: {counts.abhinav} times</li>
         <li>Sumedh: {counts.sumedh} times</li>
       </ul>
+      
+      <h2>Live Stream</h2>
+      <iframe 
+        allowFullScreen 
+        webkitallowfullscreen 
+        mozallowfullscreen 
+        src="https://video.nest.com/embedded/live/qVvjeRRcLs?autoplay=0" 
+        frameBorder="0" 
+        width="720" 
+        height="576" 
+        title="Live Stream"
+      ></iframe>
     </div>
   );
 }
