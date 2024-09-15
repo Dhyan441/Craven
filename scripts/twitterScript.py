@@ -2,6 +2,7 @@ import tweepy
 import sys
 import os
 import cohere
+import random
 def twitConnection():
     #Define Keys
     consumer_key = "6dGGMLEK6Q58AgS4QILRn94wA"
@@ -35,11 +36,57 @@ def generate_caption(count, dhyan):
     # Set up the Cohere API key (replace with your actual API key)
     cohere_client = cohere.Client("cp3defjpR1QXEvv3T3tpfeSP3FxV4GYKbMgno7oG")
     # Describe the image to the AI
-    image_description = "Caught on camera stealing snacks from your roommate."
+    prompts = [
+    "Caught on camera stealing snacks from your roommate.",
+    "Bro thought he was slick.",
+    "Unemployed friends be like.",
+    "When your boy is a raccoon.",
+    "Bro thought he was all that.",
+    "Quit munchin', hit the books dawg.",
+    "When the snack thief strikes again.",
+    "Caught red-handed in the snack aisle.",
+    "Roommate's favorite hobby: raiding the fridge.",
+    "Caught in the act of food heist.",
+    "Snack ninja at work.",
+    "When your roommate turns into a food thief.",
+    "Bro's got a PhD in snack stealing.",
+    "The audacity to take my last slice.",
+    "When the fridge becomes a crime scene.",
+    "When your roommate acts like a raccoon.",
+    "Caught pilfering snacks like a pro.",
+    "Snack-stealing level: expert.",
+    "The struggle of keeping snacks safe.",
+    "Caught red-handed in the snack raid.",
+    "When your roommate treats the fridge like a buffet.",
+    "Stealing snacks like it's a job.",
+    "The face of a professional snack thief.",
+    "Roommate’s motto: ‘What’s yours is mine.’",
+    "When the snack stash is in danger.",
+    "Caught in the act of a snack heist.",
+    "When your roommate thinks they’re a ninja.",
+    "The never-ending battle for snacks.",
+    "Caught on camera, again, taking snacks.",
+    "When the fridge is their personal snack bar.",
+    "The look of a guilty snack thief.",
+    "Caught taking the last piece of pizza.",
+    "When your roommate is a snack burglar.",
+    "Stealing snacks like a pro thief.",
+    "When the fridge becomes their treasure chest.",
+    "Caught snacking while you’re not looking.",
+    "When your roommate's side hustle is snack theft.",
+    "Caught in the act of food pilfering.",
+    "Roommate's stealth mode: activated.",
+    "When they think they’re invisible while stealing snacks.",
+    "Caught raiding the snack stash yet again.",
+    "The art of snack theft perfected."
+]
+    random_prompts = random.sample(prompts, 3)
+
+
     response = cohere_client.chat(
         model="command-r-plus",  # Choose the appropriate model size, e.g., "xlarge"
         temperature=1,
-        message=f"Write a Gen Z urban meme type tweet based on this image description: {image_description}. Avoid the phrase 'Snack thief'. Some examples to base your response on: 'When your boy is a raccoon', 'Unemployed friends be like:', 'Bro thought he was slick'. Don't put it in quotes. Add at least 2 emojis. Start with ATTEMPT #{count} -- {dhyan}",
+        message=f"Write a Gen Z urban meme type tweet based on this image description: {random_prompts}. Add at least 2 emojis. Start with ATTEMPT #{count} -- {dhyan}. End with BROUGHT TO YOU BY CRAVEN.",
     )
     caption = response.text
     #print(caption)
