@@ -3,6 +3,15 @@ const fs = require('fs')
 const path = require('path');
 const { spawn } = require('child_process');
 require('dotenv').config();
+const twilio = require('twilio');
+require('dotenv').config();
+
+const accountSid = process.env.TwilioSID;
+const authToken = process.env.TwilioToken;
+
+// Initialize the Twilio client
+const client = new twilio(accountSid, authToken);
+
 
 const nest = new Nest({
     nestId: process.env.NEST_ID,
@@ -27,6 +36,17 @@ const takeImage = (id) => {
 
     console.log("written")
 };
+
+const alertUser = (name) => {
+    client.messages.create({
+
+        body: `ALERT: ${name} has tried to reach for your snacks but don't worry, I got your back. Check X in a couple minutes...`,
+        from: '+13302398653',
+        to: '+17803815182'       
+    })
+    .then(message => console.log('Message sent with SID:', message.sid))
+    .catch(error => console.error('Error sending message:', error));
+}
 
 const recognizeFace = () => {
     return new Promise((resolve, reject) => {
@@ -118,10 +138,12 @@ nest.init().then(() => {
                 const name = await recognizeFace();
                 console.log("LOLOLLO");
                 if (name !== "temp") {
-                    try {
+                    try {          
                         await generateMeme(name, event.id);
                         console.log("Meme generated, now tweeting..."); // Debugging log
                         await tweet(name, event.id); // Await tweet here
+                        alertUser(name);
+
                     } catch (error) {
                         console.error(`Error in generating meme or tweeting: ${error}`);
                     }
