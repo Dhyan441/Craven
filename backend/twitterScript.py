@@ -1,14 +1,17 @@
 import tweepy
 import yaml
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def twitConnection():
     #Define Keys
-    consumer_key = "6dGGMLEK6Q58AgS4QILRn94wA"
-    consumer_secret = "5b6UBaDEQdot6qUK2xhatmAXDFq7BolOIPpZmFynNPEyuTs92J"
+    consumer_key = os.getenv("C_key")
+    consumer_secret = os.getenv("C_secret")
 
     # Access:
-    access_token  = "1835205209804443648-8wJsw5Pd0sx8CzYYgagHKOX1rgtkG3"
-    access_secret = "AaxlcZrcQO8MCsTJam0ExfugUwaVxrgyjK7P8E4LahEIF"
+    access_token  = os.getenv("A_token")
+    access_secret = os.getenv("A_secret")
     
     client = tweepy.Client(
         consumer_key = consumer_key, consumer_secret=consumer_secret,
