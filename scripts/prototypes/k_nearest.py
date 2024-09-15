@@ -205,6 +205,6 @@ if __name__ == "__main__":
             for name, (top, right, bottom, left) in predictions:
                 print("- Found {} at ({}, {})".format(name, left, top))
                 # Display results overlaid on an image
-            show_prediction_labels_on_image(os.path.join("nest-collect/images/" + person, image_file), predictions)
+                show_prediction_labels_on_image(os.path.join("nest-collect/images/" + person, image_file), predictions)
 
         
