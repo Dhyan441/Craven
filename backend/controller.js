@@ -1,10 +1,12 @@
 const express = require('express');
 const twilio = require('twilio');
-const fs = require("dotenv").config();
+const fs = require('fs');
+const path = require("path");
+
+require("dotenv").config();
 
 const accountSid = process.env.TwilioSID;
 const authToken = process.env.TwilioToken; 
-
 
 const client = twilio(accountSid, authToken);
 
@@ -34,16 +36,18 @@ function countJpgFiles(dirPath) {
   }
   
   // Function to count jpg files in all specified folders
-  function countJpgsInFolders(folders) {
+  function countJpgsInFolders(roommates) {
     const counts = {};
-    
-    folders.forEach(folder => {
-      const folderPath = path.join(__dirname, 'images', folder);
-      if (fs.existsSync(folderPath)) {
-        counts[folder] = countJpgFiles(folderPath);
+
+    roommates.forEach(roommate => {
+        let path = '../nest-collect/images/' + roommate
+
+        console.log(path)
+      if (fs.existsSync(path)) {
+        counts[roommate] = countJpgFiles(path);
       } else {
-        counts[folder] = 0;
-        console.log(`Folder ${folder} does not exist.`);
+        counts[roommate] = 0;
+        console.log(`Folder ${path} does not exist.`);
       }
     });
   
@@ -54,8 +58,7 @@ function countJpgFiles(dirPath) {
 // Endpoint to get .jpg file counts in specified folders
 app.get('/stats', (req, res) => {
     // Expecting a query parameter with a list of folder names
-    const folders = req.query.folders ? req.query.folders.split(',') : [];
-  
+    const folders = ['abhinav', 'dhyan', 'sumedh', 'nandan'];
     if (!folders.length) {
       return res.status(400).json({ error: 'No folders specified.' });
     }
