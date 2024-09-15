@@ -1,4 +1,6 @@
 import cohere
+import sys
+import os
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 # Generate a caption for the meme using the Cohere API
@@ -22,7 +24,7 @@ def drawText(imagePath, caption):
     draw = ImageDraw.Draw(image)
 
     # Load a font (adjust the font size as needed)
-    font = ImageFont.truetype("impact.ttf", 25)
+    font = ImageFont.truetype("Arial.ttf", 25)
 
     # Get image dimensions
     image_width, image_height = image.size
@@ -48,9 +50,15 @@ def drawText(imagePath, caption):
     return image
 
 if __name__ == "__main__":
-    
-    image_path = 'nandu.jpg'
+    name = sys.argv[1]
+    file_name = sys.argv[2]
+    full_file_path_source = os.path.join("../nest-collect/images", name, file_name)
+    print(full_file_path_source)
     image_description = "Caught on camera stealing snacks from your roommate."
+    print("generating")
     caption = generate_caption(image_description)
-    image = drawText(image_path, caption)
-    image.save('meme_output.jpg')
+    print("drawing")
+    image = drawText(full_file_path_source, caption)
+    print("saving")
+    print(file_name)
+    image.save(os.path.join("../scripts/meme-final", file_name))
