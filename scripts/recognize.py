@@ -108,7 +108,7 @@ if __name__ == "__main__":
             (top, right, bottom, left) = topPrediction[1]
             #print("- Found {} at ({}, {})".format(name, left, top))
             # Display results overlaid on an image
-            show_prediction_labels_on_image(os.path.join("../nest-collect/images/temp", image_file), predictions)
+            #show_prediction_labels_on_image(os.path.join("../nest-collect/images/temp", image_file), predictions)
             # Move photo to correct directory
 
 
@@ -125,7 +125,7 @@ if __name__ == "__main__":
         else:
             print("temp")
             # delete file
-            #os.remove(full_file_path_source)
+            os.remove(full_file_path_source)
         
 
         

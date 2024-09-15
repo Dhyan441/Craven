@@ -24,7 +24,7 @@ def drawText(imagePath, caption):
     draw = ImageDraw.Draw(image)
 
     # Load a font (adjust the font size as needed)
-    font = ImageFont.truetype("impact.ttf", 25)
+    font = ImageFont.truetype("Arial.ttf", 25)
 
     # Get image dimensions
     image_width, image_height = image.size
@@ -50,11 +50,15 @@ def drawText(imagePath, caption):
     return image
 
 if __name__ == "__main__":
-    
-    for image_file in os.listdir("meme-temp"):
-        full_file_path_source = os.path.join("meme-temp", image_file)
-        image_description = "Caught on camera stealing snacks from your roommate."
-        caption = generate_caption(image_description)
-        image = drawText(full_file_path_source, caption)
-        image.save(os.path.join("meme-final", full_file_path_source))
-        os.remove(full_file_path_source)
+    name = sys.argv[1]
+    file_name = sys.argv[2]
+    full_file_path_source = os.path.join("../nest-collect/images", name, file_name)
+    print(full_file_path_source)
+    image_description = "Caught on camera stealing snacks from your roommate."
+    print("generating")
+    caption = generate_caption(image_description)
+    print("drawing")
+    image = drawText(full_file_path_source, caption)
+    print("saving")
+    print(file_name)
+    image.save(os.path.join("../scripts/meme-final", file_name))
