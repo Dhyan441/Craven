@@ -11,7 +11,7 @@ Craven is centered around a small Nest security camera placed at the back of you
 - **Backend:** Node.js, Express, Charles
 - **Frontend:** React, Chart.js
 - **Facial Recognition:** OpenCV, TensorFlow, DLib
-- **Pipeline:** VoiceFlow, Twilio, X, Cohere
+- **Pipeline:** Twilio, X, Cohere
 
 ## Challenges we ran into 🚩
 In order to have unfettered access to the Nest camera's feed, we had to find a way to bypass Google's security protocol. We achieved this by running an HTTP proxy to imitate the credentials of an iOS device, allowing us to fetch snapshots from the camera at any time.
