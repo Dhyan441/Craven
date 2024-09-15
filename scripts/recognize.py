@@ -91,7 +91,7 @@ if __name__ == "__main__":
     for image_file in os.listdir("../nest-collect/images/temp"):
         full_file_path_source = os.path.join("../nest-collect/images/temp", image_file)
 
-        print("Looking for faces in {}".format(image_file))
+        #print("Looking for faces in {}".format(image_file))
         # Find all people in the image using a trained classifier model
         # Note: You can pass in either a classifier file name or a classifier model instance
 
@@ -106,7 +106,7 @@ if __name__ == "__main__":
             topPrediction = predictions[0]
             name = topPrediction[0]
             (top, right, bottom, left) = topPrediction[1]
-            print("- Found {} at ({}, {})".format(name, left, top))
+            #print("- Found {} at ({}, {})".format(name, left, top))
             # Display results overlaid on an image
             show_prediction_labels_on_image(os.path.join("../nest-collect/images/temp", image_file), predictions)
             # Move photo to correct directory
@@ -121,8 +121,9 @@ if __name__ == "__main__":
 
             # Move the file
             shutil.move(full_file_path_source, destination)
+            print(name)
         else:
-            print("BOZO NOT RECOGNIZED!")
+            print("temp")
             # delete file
             #os.remove(full_file_path_source)
         
