@@ -8,10 +8,11 @@ def generate_caption(image_description):
     # Describe the image to the AI
     response = cohere_client.chat(
         model="command-r-plus",  # Choose the appropriate model size, e.g., "xlarge"
+        temperature=1,
         message=f"Write a 4-10 word Gen Z urban meme caption based on this image description: {image_description}. Avoid the phrase 'Snack thief'. Some examples to base your response on: 'When your boy is a raccoon', 'Unemployed friends be like:', 'Bro thought he was slick'. Don't put it in quotes.",
     )
     caption = response.text
-    print(caption)
+    #print(caption)
     return caption
 
 
