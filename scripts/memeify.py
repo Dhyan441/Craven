@@ -5,8 +5,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 # Generate a caption for the meme using the Cohere API
 def generate_caption(image_description):
-    # Set up the Cohere API key (replace with your actual API key)
-    cohere_client = cohere.Client("cp3defjpR1QXEvv3T3tpfeSP3FxV4GYKbMgno7oG")
+    cohere_client = cohere.Client(COHERE_API_KEY)
     # Describe the image to the AI
     response = cohere_client.chat(
         model="command-r-plus",  # Choose the appropriate model size, e.g., "xlarge"
@@ -14,7 +13,6 @@ def generate_caption(image_description):
         message=f"Write a 4-10 word Gen Z urban meme caption based on this image description: {image_description}. Avoid the phrase 'Snack thief'. Some examples to base your response on: 'When your boy is a raccoon', 'Unemployed friends be like:', 'Bro thought he was slick'. Don't put it in quotes.",
     )
     caption = response.text
-    #print(caption)
     return caption
 
 
