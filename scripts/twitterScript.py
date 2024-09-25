@@ -5,12 +5,12 @@ import cohere
 import random
 def twitConnection():
     #Define Keys
-    consumer_key = "6dGGMLEK6Q58AgS4QILRn94wA"
-    consumer_secret = "5b6UBaDEQdot6qUK2xhatmAXDFq7BolOIPpZmFynNPEyuTs92J"
+    consumer_key = ""
+    consumer_secret = ""
 
     # Access:
-    access_token  = "1835205209804443648-8wJsw5Pd0sx8CzYYgagHKOX1rgtkG3"
-    access_secret = "AaxlcZrcQO8MCsTJam0ExfugUwaVxrgyjK7P8E4LahEIF"
+    access_token  = ""
+    access_secret = ""
     
     client = tweepy.Client(
         consumer_key = consumer_key, consumer_secret=consumer_secret,
@@ -20,12 +20,12 @@ def twitConnection():
 
 def twitConnection_v1():
     #Define Keys
-    consumer_key = "6dGGMLEK6Q58AgS4QILRn94wA"
-    consumer_secret = "5b6UBaDEQdot6qUK2xhatmAXDFq7BolOIPpZmFynNPEyuTs92J"
+    consumer_key = ""
+    consumer_secret = ""
 
     # Access:
-    access_token  = "1835205209804443648-8wJsw5Pd0sx8CzYYgagHKOX1rgtkG3"
-    access_secret = "AaxlcZrcQO8MCsTJam0ExfugUwaVxrgyjK7P8E4LahEIF"
+    access_token  = ""
+    access_secret = ""
     
     auth = tweepy.OAuth1UserHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_secret)
@@ -34,7 +34,7 @@ def twitConnection_v1():
 
 def generate_caption(count, dhyan):
     # Set up the Cohere API key (replace with your actual API key)
-    cohere_client = cohere.Client("cp3defjpR1QXEvv3T3tpfeSP3FxV4GYKbMgno7oG")
+    cohere_client = cohere.Client("")
     # Describe the image to the AI
     prompts = [
     "Caught on camera stealing snacks from your roommate.",
